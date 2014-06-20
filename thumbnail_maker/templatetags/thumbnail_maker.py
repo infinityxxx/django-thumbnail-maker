@@ -30,20 +30,24 @@ class UseThumbnailNode(ThumbnailNode):
 
     def _render(self, context):
         file_ = self.file_.resolve(context)
-        geometry = self.geometry.resolve(context)
         geometry, options = file_.field.thumbs.get(geometry)
-        if hasattr(settings, 'THUMBNAIL_DUMMY'):
-            thumbnail = DummyImageFile(geometry)
-        elif file_:
-            thumbnail = default.backend.get_thumbnail(
-                file_, geometry, **options
-            )
+        thumbnail = get_thumbnail(file_, geometry, **options)
+
+        if not thumbnail or (isinstance(thumbnail, DummyImageFile) and
+                             self.nodelist_empty):
+            if self.nodelist_empty:
+                return self.nodelist_empty.render(context)
+            else:
+                return ''
+
+        if self.as_var:
+            context.push()
+            context[self.as_var] = thumbnail
+            output = self.nodelist_file.render(context)
+            context.pop()
         else:
-            return self.nodelist_empty.render(context)
-        context.push()
-        context[self.as_var] = thumbnail
-        output = self.nodelist_file.render(context)
-        context.pop()
+            output = thumbnail.url
+
         return output
 
     def __repr__(self):
