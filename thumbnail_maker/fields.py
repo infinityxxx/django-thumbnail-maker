@@ -31,11 +31,11 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
         Generate the thumbnails when file is uploaded
         """
         for thumbname, (geometry, options) in self.field.thumbs.items():
-            self.make_one_thumbnail(file_name, thumbname, options,
-                                    geometry, force=force)
+            self.make_thumbnail(file_name, thumbname, options,
+                                geometry, force=force)
 
-    def make_one_thumbnail(self, file_name, thumb_name, thumb_options,
-                           geometry, force=False):
+    def make_thumbnail(self, file_name, thumb_name, thumb_options,
+                       geometry, force=False):
         """
         Generate separate thumbnail.
         Generate new thumbnail if `force` is True.
