@@ -43,11 +43,11 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
             sorl_kvstore._delete(thumb.key)
         get_thumbnail(file_name, geometry, **thumb_options)
 
-    def get_thumbnail_options(self, thumb_options={}):
+    def get_thumbnail_options(self, thumb_options=None):
         """
         Get all options of thumbnail, including default ones.
         """
-        full_options = thumb_options.copy()
+        full_options = thumb_options.copy() if thumb_options else {}
 
         if settings.THUMBNAIL_PRESERVE_FORMAT:
             full_options.setdefault('format',
