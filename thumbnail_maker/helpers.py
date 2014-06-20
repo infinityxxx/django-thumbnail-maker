@@ -1,3 +1,6 @@
+"""
+Helper functions
+"""
 from sorl.thumbnail.conf import settings
 from sorl.thumbnail.default import backend as sorl_backend
 

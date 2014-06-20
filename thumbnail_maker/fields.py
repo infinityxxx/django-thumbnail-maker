@@ -1,3 +1,6 @@
+"""
+Required model fields
+"""
 from django.db.models.fields.files import ImageFieldFile
 from sorl.thumbnail import get_thumbnail
 from sorl.thumbnail.default import (kvstore as sorl_kvstore,
@@ -10,7 +13,10 @@ from thumbnail_maker.helpers import get_thumbnail_options
 
 
 class ImageWithThumbnailsFieldFile(ImageFieldFile):
-
+    """
+    ImageFieldFile from sorl-thumbnail saving thumbnails on upload,
+    using field.thumbs option
+    """
     def save(self, name, content, save=True):
         """
         Generate pre-defined thumbnails on field save
@@ -46,7 +52,9 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
 
 
 class ImageWithThumbnailsField(ImageField):
-
+    """
+    ImageField from sorl-thumbnail saving `thumbs` option
+    """
     attr_class = ImageWithThumbnailsFieldFile
 
     def __init__(self, *args, **kwargs):

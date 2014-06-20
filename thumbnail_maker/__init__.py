@@ -1,4 +1,7 @@
 # -*- encoding: utf8 -*-
+"""
+Thumbnail-maker module
+"""
 from __future__ import unicode_literals
 
 import logging
@@ -10,6 +13,9 @@ __email__ = "infinityxxx@gmail.com"
 
 
 class NullHandler(logging.Handler):
+    """
+    Dummy log handler
+    """
     def emit(self, record):
         pass
 
