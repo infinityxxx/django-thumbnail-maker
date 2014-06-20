@@ -26,9 +26,9 @@ class Command(BaseCommand):
         num_args = len(self.args)
 
         if num_args < 2:
-            raise CommandError("Please pass the app.model and the field.")
+            raise CommandError("Please pass `app.model` and `field`")
         if num_args > 2:
-            raise CommandError("Too many arguments.")
+            raise CommandError("Too many arguments")
 
         if '.' not in self.args[0]:
             raise CommandError("The first argument must be: app.model")
@@ -41,10 +41,12 @@ class Command(BaseCommand):
         model_name = model_name.lower()
 
         try:
-            self.model = ContentType.objects.get(app_label=app, model=model_name)
+            self.model = ContentType.objects.get(
+                app_label=app, model=model_name
+            )
             self.model = self.model.model_class()
         except ContentType.DoesNotExist:
-            raise CommandError("There is no app/model: %s" % self.args[0])
+            raise CommandError("Not found app/model: %s" % self.args[0])
 
         self.field = self.args[1]
 
