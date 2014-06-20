@@ -1,11 +1,12 @@
 from django.db.models.fields.files import ImageFieldFile
 from sorl.thumbnail import get_thumbnail
-from sorl.thumbnail.conf import settings
 from sorl.thumbnail.default import (kvstore as sorl_kvstore,
                                     storage as sorl_storage,
                                     backend as sorl_backend)
 from sorl.thumbnail.fields import ImageField
 from sorl.thumbnail.images import ImageFile
+
+from thumbnail_maker.helpers import get_thumbnail_options
 
 
 class ImageWithThumbnailsFieldFile(ImageFieldFile):
@@ -35,28 +36,13 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
         """
         if force:
             source = ImageFile(file_name, sorl_storage)
-            full_options = self.get_thumbnail_options(thumb_options)
+            full_options = get_thumbnail_options(source, thumb_options)
             thumb_name = sorl_backend._get_thumbnail_filename(
                 source, geometry, full_options
             )
             thumb = ImageFile(thumb_name, sorl_storage)
             sorl_kvstore._delete(thumb.key)
         get_thumbnail(file_name, geometry, **thumb_options)
-
-    def get_thumbnail_options(self, thumb_options=None):
-        """
-        Get all options of thumbnail, including default ones.
-        """
-        full_options = thumb_options.copy() if thumb_options else {}
-
-        if settings.THUMBNAIL_PRESERVE_FORMAT:
-            full_options.setdefault('format',
-                                    sorl_backend._get_format(file_))
-
-        for key, value in sorl_backend.default_options.items():
-            full_options.setdefault(key, value)
-
-        return full_options
 
 
 class ImageWithThumbnailsField(ImageField):
