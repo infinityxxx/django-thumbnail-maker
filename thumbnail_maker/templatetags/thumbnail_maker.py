@@ -1,7 +1,7 @@
 import re
 from django.conf import settings
 from django.template import Library, TemplateSyntaxError
-from sorl.thumbnail import default
+from sorl.thumbnail import default, get_thumbnail
 from sorl.thumbnail.images import DummyImageFile
 from sorl.thumbnail.templatetags.thumbnail import ThumbnailNode
 
