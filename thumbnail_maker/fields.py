@@ -8,29 +8,21 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
 
     def save(self, name, content, save=True):
         super(ImageWithThumbnailsFieldFile, self).save(name, content, save)
+        self.make_thumbnails(self.name)
 
-        content.seek(0)
-        image = Image.open(content)
-
-        if image.mode not in ('L', 'RGB', 'RGBA'):
-            image = image.convert('RGBA')
-
-        make_thumbnails(image)
-
-    def make_thumbnails(self, image):
+    def make_thumbnails(self, file_name):
         """
         Generate the thumbnails when file is uploaded
         """
         for thumb in self.field.thumbs:
-            thumb_name, thumb_options = thumb
-            geometry = thumb_options.pop('size')
-            self.make_thumbnail(image, thumb_name, thumb_options, geometry)
+            thumb_name, geometry, thumb_options = thumb
+            self.make_thumbnail(file_name, thumb_name, thumb_options, geometry)
 
-    def make_thumbnail(self, image, thumb_name, thumb_options, geometry):
+    def make_thumbnail(self, file_name, thumb_name, thumb_options, geometry):
         """
         Generate separate thumbnail
         """
-        get_thumbnail(image, geometry, thumb_options)
+        get_thumbnail(file_name, geometry, **thumb_options)
 
 
 class ImageWithThumbnailsField(ImageField):
