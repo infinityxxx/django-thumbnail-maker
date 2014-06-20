@@ -14,8 +14,7 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
         """
         Generate the thumbnails when file is uploaded
         """
-        for thumb in self.field.thumbs:
-            thumb_name, geometry, thumb_options = thumb
+        for thumb_name, (geometry, thumb_options) in self.field.thumbs.iteritems():
             self.make_thumbnail(file_name, thumb_name, thumb_options, geometry)
 
     def make_thumbnail(self, file_name, thumb_name, thumb_options, geometry):
@@ -30,7 +29,7 @@ class ImageWithThumbnailsField(ImageField):
     attr_class = ImageWithThumbnailsFieldFile
 
     def __init__(self, *args, **kwargs):
-        self.thumbs = kwargs.pop('thumbs', ())
+        self.thumbs = kwargs.pop('thumbs', {})
 
         if not kwargs.has_key('max_length'):
             kwargs['max_length'] = 255
