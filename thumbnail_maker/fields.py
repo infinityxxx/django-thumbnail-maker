@@ -15,16 +15,18 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
         """
         Generate pre-defined thumbnails on field save
         """
-        super(ImageWithThumbnailsFieldFile, self).save(name, content, save)
+        super(ImageWithThumbnailsFieldFile, self).save(
+            name, content, save
+        )
         self.make_thumbnails(self.name)
 
     def make_thumbnails(self, file_name, force):
         """
         Generate the thumbnails when file is uploaded
         """
-        for thumb_name, (geometry, thumb_options) in self.field.thumbs.items():
-            self.make_one_thumbnail(file_name, thumb_name,
-                                    thumb_options, geometry, force=force)
+        for thumbname, (geometry, options) in self.field.thumbs.items():
+            self.make_one_thumbnail(file_name, thumbname, options,
+                                    geometry, force=force)
 
     def make_one_thumbnail(self, file_name, thumb_name, thumb_options,
                            geometry, force=False):
