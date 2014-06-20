@@ -20,7 +20,7 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
         )
         self.make_thumbnails(self.name)
 
-    def make_thumbnails(self, file_name, force):
+    def make_thumbnails(self, file_name, force=False):
         """
         Generate the thumbnails when file is uploaded
         """
