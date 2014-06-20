@@ -30,6 +30,7 @@ class UseThumbnailNode(ThumbnailNode):
 
     def _render(self, context):
         file_ = self.file_.resolve(context)
+        geometry = self.geometry.resolve(context)
         geometry, options = file_.field.thumbs.get(geometry)
         thumbnail = get_thumbnail(file_, geometry, **options)
 
