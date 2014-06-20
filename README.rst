@@ -1,4 +1,3 @@
-|pypi|
 
 Auto-generator of thumbnails for Django, using sorl-thumbnail.
 
