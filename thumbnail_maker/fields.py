@@ -1,4 +1,3 @@
-from PIL import Image
 from django.db.models.fields.files import ImageFieldFile
 from sorl.thumbnail import get_thumbnail
 from sorl.thumbnail.conf import settings
