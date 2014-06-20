@@ -8,7 +8,7 @@ import logging
 
 __author__ = "Tamara Khalbashkeeva"
 __license__ = "BSD"
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __email__ = "infinityxxx@gmail.com"
 
 
