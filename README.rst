@@ -19,10 +19,10 @@ Get the code for the latest stable release use pip::
 
    $ pip install django-thumbnail-maker
 
-Install in your project
+Configure your project
 -----------------------
 
-Register 'thumbnail_maker', in the 'INSTALLED_APPS' section of
+Register ``'thumbnail_maker'``, in the ``INSTALLED_APPS`` section of
 your project's settings::
 
     INSTALLED_APPS = (
@@ -41,9 +41,9 @@ your project's settings::
 Set up your model's field
 -------------------------
 
-Use 'ImageWithThumbnailsField' and 'thumbs' option as a dictionary to set up all required.
-First parameter in a dictionary is a geometry string(used in sorl-thumbnail),
-second is a dictionary with options (crop, quality, padding, format, etc.)::
+Use ``ImageWithThumbnailsField`` and ``thumbs`` option as a dictionary to set up all required thumb formats.
+First parameter in a dictionary is a geometry string(used in ``sorl-thumbnail``),
+second is a dictionary with options (``crop``, ``quality``, ``padding``, ``format``, etc.)::
 
     from django.db import models
     from thumbnail_maker import ImageWithThumbnailsField
@@ -60,16 +60,16 @@ second is a dictionary with options (crop, quality, padding, format, etc.)::
         )
 
 
-Templates Usage
+Templates usage
 ---------------
 
-All of the examples assume that you first load the thumbnail_maker template tag in
+All of the examples assume that you first load the ``thumbnail_maker`` template tag in
 your template::
 
     {% load thumbnail_maker %}
 
 
-A simple usage. ::
+A simple usage::
 
     {% usethumbnail item.image "landing_page" as im %}
         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
@@ -78,4 +78,17 @@ A simple usage. ::
     {% usethumbnail item.image "50x50" as im %}
         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
     {% endusethumbnail %}
+
+
+Management commands usage
+-------------------------
+
+Django-thumbnail-maker comes with a manage.py command to generate missing thumbs.
+You can use it while ::
+
+    ./manage.py make_thumbnails <app>.<model> <field>
+
+In case you want to make all thumbs replacing old ones, use ``--force`` option::
+    
+    ./manage.py make_thumbnails --force <app>.<model> <field>
 
