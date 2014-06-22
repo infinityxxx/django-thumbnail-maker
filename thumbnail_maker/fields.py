@@ -10,6 +10,7 @@ from sorl.thumbnail.fields import ImageField
 from sorl.thumbnail.images import ImageFile
 
 from thumbnail_maker.helpers import get_thumbnail_options
+from thumbnail_maker.settings import THUMBNAIL_MAKER_FORMATS
 
 
 class ImageWithThumbnailsFieldFile(ImageFieldFile):
@@ -30,9 +31,13 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
         """
         Generate the thumbnails when file is uploaded
         """
-        for thumbname, (geometry, options) in self.field.thumbs.items():
-            self.make_thumbnail(file_name, thumbname, options,
-                                geometry, force=force)
+        for thumbname in self.field.thumbs:
+            geometry, options = THUMBNAIL_MAKER_FORMATS.get(
+                thumbname, ('', {})
+            )
+            if geometry:
+                self.make_thumbnail(file_name, thumbname, options,
+                                    geometry, force=force)
 
     def make_thumbnail(self, file_name, thumb_name, thumb_options,
                        geometry, force=False):
@@ -61,5 +66,5 @@ class ImageWithThumbnailsField(ImageField):
         """
         Pre-define thumbs that will be auto-generated on save.
         """
-        self.thumbs = kwargs.pop('thumbs', {})
+        self.thumbs = kwargs.pop('thumbs', ())
         super(ImageWithThumbnailsField, self).__init__(*args, **kwargs)

@@ -7,7 +7,7 @@ Features
 - Auto-genarates thumbnails using sorl-thumbnail while uploading (saving) images
 - You can use any engines & plugins you usually use with sorl-thumbnail
 - The application does not replace thumbnail templatetag and you can use everything you want from sorl-thumbnail
-- Command for auto-generating of missing thumbnails
+- Command to auto-generate missing thumbnails
 
 How to Use
 ==========
@@ -37,13 +37,23 @@ your project's settings::
         'thumbnail_maker',
     )
 
+Set up required thumb formats in ``THUMBNAIL_MAKER_FORMATS`` dictionary.
+Keys are the names for your formats (could be any string).
+Values are tuples of length 2: first element is a geometry string (used in ``sorl-thumbnail``),
+second is a dictionary with options (``crop``, ``quality``, ``padding``, ``format``, etc.)::
+
+    THUMBNAIL_MAKER_FORMATS = {
+       'banner':   ('400x300', {'crop': 'center',
+                                'quality': 90}),
+       '50x50':    ('50x50',   {}),
+       'any_name': ('5x277',   {'padding': True})
+   }
 
 Set up your model's field
 -------------------------
 
-Use ``ImageWithThumbnailsField`` and ``thumbs`` option as a dictionary to set up all required thumb formats.
-First parameter in a dictionary is a geometry string(used in ``sorl-thumbnail``),
-second is a dictionary with options (``crop``, ``quality``, ``padding``, ``format``, etc.)::
+Use ``ImageWithThumbnailsField`` and ``thumbs`` option, where ``thumbs`` is a tuple of thumb format names
+(keys from ``THUMBNAIL_MAKER_FORMATS`` dictionary)::
 
     from django.db import models
     from thumbnail_maker import ImageWithThumbnailsField
@@ -51,12 +61,7 @@ second is a dictionary with options (``crop``, ``quality``, ``padding``, ``forma
     class Item(models.Model):
         image = ImageWithThumbnailsField(
             upload_to='somewhere',
-            thumbs={
-                'langing_page': ('400x300', {'crop': 'center',
-                                             'quality': 90}),
-                '50x50':        ('50x50',   {}),
-                'any_name':     ('5x277',   {'padding': True})
-            }
+            thumbs=('banner', '50x50'),
         )
 
 
@@ -68,10 +73,9 @@ your template::
 
     {% load thumbnail_maker %}
 
-
 A simple usage::
 
-    {% usethumbnail item.image "landing_page" as im %}
+    {% usethumbnail item.image "banner" as im %}
         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
     {% endusethumbnail %}
 
@@ -79,6 +83,11 @@ A simple usage::
         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
     {% endusethumbnail %}
 
+You can also use string paths instead of image objects::
+
+    {% usethumbnail "dummy/image.png" "50x50" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+    {% endusethumbnail %}
 
 Management commands usage
 -------------------------
@@ -91,4 +100,3 @@ You can use it while ::
 In case you want to make all thumbs replacing old ones, use ``--force`` option::
     
     ./manage.py make_thumbnails --force <app>.<model> <field>
-
