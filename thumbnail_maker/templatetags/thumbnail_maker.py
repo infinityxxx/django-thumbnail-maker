@@ -1,9 +1,10 @@
 import re
-from django.conf import settings
 from django.template import Library, TemplateSyntaxError
 from sorl.thumbnail import default, get_thumbnail
 from sorl.thumbnail.images import DummyImageFile
 from sorl.thumbnail.templatetags.thumbnail import ThumbnailNode
+
+from ..settings import THUMBNAIL_MAKER_FORMATS
 
 
 register = Library()
@@ -30,8 +31,12 @@ class UseThumbnailNode(ThumbnailNode):
 
     def _render(self, context):
         file_ = self.file_.resolve(context)
+        # geometry here is a name of thumb format
         geometry = self.geometry.resolve(context)
-        geometry, options = file_.field.thumbs.get(geometry)
+        # now get actual geometry string for sorl-thumbnail
+        geometry, options = THUMBNAIL_MAKER_FORMATS.get(
+            geometry, ('', {})
+        )
         thumbnail = get_thumbnail(file_, geometry, **options)
 
         if not thumbnail or (isinstance(thumbnail, DummyImageFile) and
