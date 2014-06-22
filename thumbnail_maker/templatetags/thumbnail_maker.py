@@ -1,6 +1,9 @@
+"""
+Templatetags
+"""
 import re
 from django.template import Library, TemplateSyntaxError
-from sorl.thumbnail import default, get_thumbnail
+from sorl.thumbnail import get_thumbnail
 from sorl.thumbnail.images import DummyImageFile
 from sorl.thumbnail.templatetags.thumbnail import ThumbnailNode
 
@@ -62,4 +65,9 @@ class UseThumbnailNode(ThumbnailNode):
 
 @register.tag
 def usethumbnail(parser, token):
+    """
+    Return thumbnailed image, just like `thumbnail` templatetag
+    from sorl-thumbnail, but using thumbnail's pre-defined format name
+    instead of geometry and does not accept any other parameters.
+    """
     return UseThumbnailNode(parser, token)
