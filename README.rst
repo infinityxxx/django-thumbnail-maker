@@ -52,7 +52,7 @@ second is a dictionary with options (``crop``, ``quality``, ``padding``, ``forma
 You can set up ``THUMBNAIL_MAKER_DEBUG`` setting.
 By default it is set to ``False`` in order to pass exceptions
 while saving models or while generating batch of thumbnails.
-This setting is not required.
+This setting is not required. Usage::
 
     THUMBNAIL_MAKER_DEBUG = True
 
