@@ -10,7 +10,8 @@ from sorl.thumbnail.fields import ImageField
 from sorl.thumbnail.images import ImageFile
 
 from thumbnail_maker.helpers import get_thumbnail_options
-from thumbnail_maker.settings import THUMBNAIL_MAKER_FORMATS
+from thumbnail_maker.settings import (THUMBNAIL_MAKER_FORMATS,
+                                      THUMBNAIL_MAKER_DEBUG)
 
 
 class ImageWithThumbnailsFieldFile(ImageFieldFile):
@@ -45,15 +46,19 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
         Generate separate thumbnail.
         Generate new thumbnail if `force` is True.
         """
-        if force:
-            source = ImageFile(file_name, sorl_storage)
-            full_options = get_thumbnail_options(source, thumb_options)
-            thumb_name = sorl_backend._get_thumbnail_filename(
-                source, geometry, full_options
-            )
-            thumb = ImageFile(thumb_name, sorl_storage)
-            sorl_kvstore._delete(thumb.key)
-        get_thumbnail(file_name, geometry, **thumb_options)
+        try:
+            if force:
+                source = ImageFile(file_name, sorl_storage)
+                full_options = get_thumbnail_options(source, thumb_options)
+                thumb_name = sorl_backend._get_thumbnail_filename(
+                    source, geometry, full_options
+                )
+                thumb = ImageFile(thumb_name, sorl_storage)
+                sorl_kvstore._delete(thumb.key)
+            get_thumbnail(file_name, geometry, **thumb_options)
+        except Exception:
+            if THUMBNAIL_MAKER_DEBUG:
+                raise
 
 
 class ImageWithThumbnailsField(ImageField):
