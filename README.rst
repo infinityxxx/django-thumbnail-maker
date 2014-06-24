@@ -49,6 +49,14 @@ second is a dictionary with options (``crop``, ``quality``, ``padding``, ``forma
        'any_name': ('5x277',   {'padding': True})
    }
 
+You can set up ``THUMBNAIL_MAKER_DEBUG`` setting.
+By default it is set to ``False`` in order to pass exceptions
+while saving models or while generating batch of thumbnails.
+This setting is not required.
+
+    THUMBNAIL_MAKER_DEBUG = True
+
+
 Set up your model's field
 -------------------------
 
