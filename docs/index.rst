@@ -1,7 +1,4 @@
-.. Django-thumbnail-maker documentation master file, created by
-   sphinx-quickstart on Sun Jun 22 05:14:02 2014.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. Django-thumbnail-maker documentation file
 
 Welcome to Django-thumbnail-maker's documentation!
 ==================================================
@@ -9,8 +6,9 @@ Welcome to Django-thumbnail-maker's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
+   app
 
 
 Indices and tables
