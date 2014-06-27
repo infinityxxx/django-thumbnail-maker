@@ -1,14 +1,11 @@
 language: python
 
 python:
-  - "2.6"
   - "2.7"
+  - "3.2"
   - "3.3"
-  - "3.4"
-  - "pypy"
 
 env:
-  - DJANGO_VERSION=1.4
   - DJANGO_VERSION=1.5
   - DJANGO_VERSION=1.6
   - DJANGO_VERSION=dev
@@ -16,9 +13,6 @@ env:
 matrix:
   allow_failures:
     - env: DJANGO_VERSION=dev
-  exclude:
-    - env: DJANGO_VERSION=dev
-      python: "2.6"
 
 # command to install dependencies
 install:
