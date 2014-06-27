@@ -29,7 +29,8 @@ class ModelTestCase(BaseTestCase):
         self.item = Item()
         self.item.image.save(
             'data/bamboo.png',
-            File(open(os.path.join(settings.DATA_ROOT, 'bamboo.png')))
+            File(open(os.path.join(settings.DATA_ROOT, 'bamboo.png'), 'rb')),
+            save=False
         )
         # small: 80x80
         self.assertTrue(

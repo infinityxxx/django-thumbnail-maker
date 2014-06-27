@@ -60,4 +60,4 @@ class Command(BaseCommand):
         for instance in Model.objects.all():
             field = getattr(instance, self.field)
             field.make_thumbnails(field.name, force=force)
-            print "Thumbnail for pk=%s: %s" % (instance.pk, field.name)
+            print("Thumbnail for pk=%s: %s" % (instance.pk, field.name))

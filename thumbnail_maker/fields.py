@@ -56,7 +56,7 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
                 thumb = ImageFile(thumb_name, sorl_storage)
                 sorl_kvstore._delete(thumb.key)
             get_thumbnail(file_name, geometry, **thumb_options)
-        except Exception:
+        except Exception as e:
             if THUMBNAIL_MAKER_DEBUG:
                 raise
 
