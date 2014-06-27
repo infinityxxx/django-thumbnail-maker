@@ -3,6 +3,7 @@ import shutil
 
 from django.conf import settings
 from django.core import management
+from django.template.loader import render_to_string
 from django.test import TestCase
 
 from .models import Item
@@ -14,13 +15,12 @@ DATA_DIR = os.path.join(settings.MEDIA_ROOT, 'data')
 class BaseTestCase(TestCase):
 
     def setUp(self):
-        try:
+        if not os.path.exists(settings.MEDIA_ROOT):
             os.makedirs(settings.MEDIA_ROOT)
-        except OSError, e:
-            if e.errno != 17:
-                raise
+            shutil.copytree(settings.DATA_ROOT, DATA_DIR)
 
     def tearDown(self):
+        pass
         shutil.rmtree(settings.MEDIA_ROOT)
 
 
@@ -30,7 +30,21 @@ class ModelTestCase(BaseTestCase):
 
 
 class TemplateTestCase(BaseTestCase):
-    pass
+    def setUp(self):
+        super(TemplateTestCase, self).setUp()
+        self.item, created = Item.objects.get_or_create(image='data/bamboo.png')
+
+    def test_templatetag(self):
+
+        val = render_to_string('usethumbnail_big.html', {
+            'item': self.item,
+        }).strip()
+        self.assertEqual(val, '<img width="500" height="400">')
+
+        val = render_to_string('usethumbnail_small.html', {
+            'item': self.item,
+        }).strip()
+        self.assertEqual(val, '<img width="80" height="80">')
 
 
 class CommandTestCase(BaseTestCase):

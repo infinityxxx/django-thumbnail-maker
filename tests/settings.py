@@ -3,8 +3,8 @@ import os
 import os.path
 
 
-PROJ_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                            os.path.pardir))
+PROJ_ROOT = os.path.abspath(os.path.dirname(__file__))
+DATA_ROOT = os.path.join(PROJ_ROOT, 'data')
 
 DEBUG = True
 
@@ -15,14 +15,18 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS = [
+INSTALLED_APPS = (
     'django.contrib.contenttypes',
 
     'sorl.thumbnail',
     'thumbnail_maker',
 
     'testapp',
-]
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.request",
+)
 
 SITE_ID = 1
 
@@ -48,7 +52,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 THUMBNAIL_MAKER_FORMATS = {
-    'big':    ('600x400', {'quality': 100}),
+    'big':    ('500x400', {'crop': 'center', 'quality': 100}),
     'medium': ('200x150', {'crop': 'center'}),
     'small':  ('80x80',   {'crop': 'center'}),
 }
+
