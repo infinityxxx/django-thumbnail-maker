@@ -1,3 +1,7 @@
 from django.db import models
+from thumbnail_maker.fields import ImageWithThumbnailsField
 
-# Create your models here.
+
+class Item(models.Model):
+    image = ImageWithThumbnailsField('image file', upload_to=True,
+                                     thumbs=('big', 'small'),)

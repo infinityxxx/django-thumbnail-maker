@@ -1,8 +1,10 @@
 from __future__ import unicode_literals
 import os
+import os.path
 
 
-DIRNAME = os.path.dirname(__file__)
+PROJ_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                            os.path.pardir))
 
 DEBUG = True
 
@@ -15,17 +17,19 @@ DATABASES = {
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
-    'django.contrib.sites',
-    'django.contrib.sessions',
-    'django.contrib.staticfiles',
-    'django.contrib.auth',
-    'django.contrib.admin',
 
     'sorl.thumbnail',
     'thumbnail_maker',
 
     'testapp',
 ]
+
+SITE_ID = 1
+
+MEDIA_ROOT = os.path.join(PROJ_ROOT, 'media')
+MEDIA_URL = '/media/'
+
+ROOT_URLCONF = 'testapp.urls'
 
 # Required for Django 1.4+
 STATIC_URL = '/static/'
@@ -42,3 +46,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+THUMBNAIL_MAKER_FORMATS = {
+    'big':    ('600x400', {'quality': 100}),
+    'medium': ('200x150', {'crop': 'center'}),
+    'small':  ('80x80',   {'crop': 'center'}),
+}
