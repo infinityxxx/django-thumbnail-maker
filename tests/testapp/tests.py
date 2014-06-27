@@ -3,6 +3,7 @@ import shutil
 
 from django.conf import settings
 from django.core import management
+from django.core.files import File
 from django.template.loader import render_to_string
 from django.test import TestCase
 
@@ -20,19 +21,47 @@ class BaseTestCase(TestCase):
             shutil.copytree(settings.DATA_ROOT, DATA_DIR)
 
     def tearDown(self):
-        pass
         shutil.rmtree(settings.MEDIA_ROOT)
 
 
 class ModelTestCase(BaseTestCase):
-    def setUp(self):
-        super(ModelTestCase, self).setUp()
+    def test_auto_generating_thumbs(self):
+        self.item = Item()
+        self.item.image.save(
+            'data/bamboo.png',
+            File(open(os.path.join(settings.DATA_ROOT, 'bamboo.png')))
+        )
+        # small: 80x80
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    settings.MEDIA_ROOT,
+                    #'cache/65/04/650496dff97f883e3df125025a2dcd65.jpg'
+                    'cache/3a/83/3a8334660aa38c27220ef11e8681ea06.jpg'
+
+                )
+            )
+        )
+
+        # big: 500x400
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    settings.MEDIA_ROOT,
+                    #'cache/72/58/7258f6b747cba3161d7866fbb66ccd87.jpg'
+                    'cache/4a/20/4a2010bd55d5605a75cad0338f38f72e.jpg'
+
+                )
+            )
+        )
 
 
 class TemplateTestCase(BaseTestCase):
     def setUp(self):
         super(TemplateTestCase, self).setUp()
-        self.item, created = Item.objects.get_or_create(image='data/bamboo.png')
+        self.item, created = Item.objects.get_or_create(
+            image='data/bamboo.png'
+        )
 
     def test_templatetag(self):
 
@@ -55,3 +84,4 @@ class CommandTestCase(BaseTestCase):
 
     def test_make_thumbnail(self):
         management.call_command('make_thumbnails', 'testapp.Item', 'image', verbosity=1)
+
