@@ -7,7 +7,7 @@ from django.core.files import File
 from django.template.loader import render_to_string
 from django.test import TestCase
 
-from .models import Item
+from testapp.models import Item
 
 
 DATA_DIR = os.path.join(settings.MEDIA_ROOT, 'data')
