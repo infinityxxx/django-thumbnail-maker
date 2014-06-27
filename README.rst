@@ -1,3 +1,5 @@
+.. image:: https://travis-ci.org/infinityxxx/django-thumbnail-maker.svg?branch=master
+    :target: https://travis-ci.org/infinityxxx/django-thumbnail-maker
 
 Auto-generator of thumbnails for Django, using sorl-thumbnail.
 
