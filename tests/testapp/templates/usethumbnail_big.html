@@ -1,0 +1,9 @@
+{% load thumbnail_maker %}{% spaceless %}
+
+{% usethumbnail item.image 'big' as im %}
+    <img width="{{ im.x }}" height="{{ im.y }}">
+{% empty %}
+    <p>Big image is not available</p>
+{% endusethumbnail %}
+
+{% endspaceless %}
