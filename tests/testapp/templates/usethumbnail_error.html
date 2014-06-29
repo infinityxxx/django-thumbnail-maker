@@ -1,0 +1,9 @@
+{% load thumbnail_maker %}{% spaceless %}
+
+{% usethumbnail item.image 'small' crop='canter' as im %}
+    <img width="{{ im.x }}" height="{{ im.y }}">
+{% empty %}
+    <p>Small image is not available</p>
+{% endusethumbnail %}
+
+{% endspaceless %}

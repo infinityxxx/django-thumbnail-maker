@@ -4,6 +4,7 @@ import shutil
 from django.conf import settings
 from django.core import management
 from django.core.files import File
+from django.template import TemplateSyntaxError
 from django.template.loader import render_to_string
 from django.test import TestCase
 
@@ -76,6 +77,11 @@ class TemplateTestCase(BaseTestCase):
         }).strip()
         self.assertEqual(val, '<img width="80" height="80">')
 
+        with self.assertRaises(TemplateSyntaxError):
+            val = render_to_string('usethumbnail_error.html', {
+                'item': self.item,
+            }).strip()
+
 
 class CommandTestCase(BaseTestCase):
     def setUp(self):
@@ -93,3 +99,27 @@ class CommandTestCase(BaseTestCase):
             self.assertTrue(
                 os.path.exists(os.path.join(settings.MEDIA_ROOT, f))
             )
+
+    def test_make_thumbnail_force(self):
+        management.call_command('make_thumbnails', 'testapp.Item', 'image', verbosity=1, force=True)
+
+        for f in ('cache/65/04/650496dff97f883e3df125025a2dcd65.jpg',
+                  'cache/72/58/7258f6b747cba3161d7866fbb66ccd87.jpg',
+                  'cache/84/8f/848f13e3183c0ed9bb5d96eb95de70f0.jpg',
+                  'cache/ed/87/ed875125009a8755bc64944268e81557.jpg'):
+            self.assertTrue(
+                os.path.exists(os.path.join(settings.MEDIA_ROOT, f))
+            )
+
+    def test_make_thumbnail_error(self):
+        with self.assertRaises(management.CommandError):
+            management.call_command('make_thumbnails', 'testapp.Item', verbosity=1)
+
+        with self.assertRaises(management.CommandError):
+            management.call_command('make_thumbnails', 'testapp.Item', 'image', 'arg', verbosity=1)
+
+        with self.assertRaises(management.CommandError):
+            management.call_command('make_thumbnails', 'Item', 'image', verbosity=1)
+
+        with self.assertRaises(management.CommandError):
+            management.call_command('make_thumbnails', 'noapp.Noitem', 'image', verbosity=1)
