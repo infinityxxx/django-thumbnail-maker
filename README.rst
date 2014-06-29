@@ -1,8 +1,8 @@
-.. image:remote: https://travis-ci.org/infinityxxx/django-thumbnail-maker.svg?branch=master
+.. image:: https://travis-ci.org/infinityxxx/django-thumbnail-maker.svg?branch=master
     :target: https://travis-ci.org/infinityxxx/django-thumbnail-maker
-.. image:remote: https://coveralls.io/repos/infinityxxx/django-thumbnail-maker/badge.png?branch=master
+.. image:: https://coveralls.io/repos/infinityxxx/django-thumbnail-maker/badge.png?branch=master
     :target: https://coveralls.io/r/infinityxxx/django-thumbnail-maker?branch=master
-.. image:remote: https://badge.fury.io/py/django-thumbnail-maker.svg
+.. image:: https://badge.fury.io/py/django-thumbnail-maker.svg
     :target: http://badge.fury.io/py/django-thumbnail-maker
 
 Auto-generator of thumbnails for Django, using sorl-thumbnail.
