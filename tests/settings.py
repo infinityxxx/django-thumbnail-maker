@@ -33,7 +33,7 @@ SITE_ID = 1
 MEDIA_ROOT = os.path.join(PROJ_ROOT, 'media')
 MEDIA_URL = '/media/'
 
-ROOT_URLCONF = 'testapp.urls'
+#ROOT_URLCONF = 'testapp.urls'
 
 # Required for Django 1.4+
 STATIC_URL = '/static/'
@@ -57,3 +57,4 @@ THUMBNAIL_MAKER_FORMATS = {
     'small':  ('80x80',   {'crop': 'center'}),
 }
 
+#TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
