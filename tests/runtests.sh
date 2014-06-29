@@ -11,7 +11,7 @@ fi
 export args="$@"
 if [ -z "$args" ] ; then
     # avoid running the tests for django.contrib.* (they're in INSTALLED_APPS)
-    export args=testapp
+    export args="testapp thumbnail_maker"
 fi
 
-$DJANGO_ADMIN test --traceback --settings=$DJANGO_SETTINGS_MODULE --verbosity 2 --pythonpath="../" "$args"
+$DJANGO_ADMIN test --traceback --settings=$DJANGO_SETTINGS_MODULE --verbosity 2 --pythonpath="../" $args
