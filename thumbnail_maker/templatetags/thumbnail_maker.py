@@ -54,8 +54,6 @@ class UseThumbnailNode(ThumbnailNode):
             context[self.as_var] = thumbnail
             output = self.nodelist_file.render(context)
             context.pop()
-        else:
-            output = thumbnail.url
 
         return output
 
