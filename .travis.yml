@@ -10,6 +10,8 @@ env:
   - DJANGO_VERSION=1.5
   - DJANGO_VERSION=1.6
   - DJANGO_VERSION=dev
+  - global:
+    - WARNINGS_ARE_ERRORS=0
 
 matrix:
   allow_failures:
