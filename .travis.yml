@@ -15,10 +15,18 @@ matrix:
   allow_failures:
     - env: DJANGO_VERSION=dev
 
-# command to install dependencies
 install:
-    - pip install -q --use-mirrors tox
+    - pip install -q coveralls
+    - pip install -q tox
 
-# command to run tests
+after_success:
+  - coverage combine
+  - coveralls
+
+branches:
+  only:
+    - master
+
 script:
+    - coverage erase
     - tox -e py${TRAVIS_PYTHON_VERSION/./}-${DJANGO_VERSION},docs
