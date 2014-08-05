@@ -70,7 +70,7 @@ Use ``ImageWithThumbnailsField`` and ``thumbs`` option, where ``thumbs`` is a tu
 (keys from ``THUMBNAIL_MAKER_FORMATS`` dictionary)::
 
     from django.db import models
-    from thumbnail_maker import ImageWithThumbnailsField
+    from thumbnail_maker.fields import ImageWithThumbnailsField
 
     class Item(models.Model):
         image = ImageWithThumbnailsField(
