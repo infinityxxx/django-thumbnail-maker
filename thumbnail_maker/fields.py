@@ -26,7 +26,8 @@ class ImageWithThumbnailsFieldFile(ImageFieldFile):
         super(ImageWithThumbnailsFieldFile, self).save(
             name, content, save
         )
-        self.make_thumbnails(self.name)
+        if self.field.auto_save_thumb:
+            self.make_thumbnails(self.name)
 
     def make_thumbnails(self, file_name, force=False):
         """
@@ -72,4 +73,5 @@ class ImageWithThumbnailsField(ImageField):
         Pre-define thumbs that will be auto-generated on save.
         """
         self.thumbs = kwargs.pop('thumbs', ())
+        self.auto_save_thumb = kwargs.pop('auto_save_thumb', True)
         super(ImageWithThumbnailsField, self).__init__(*args, **kwargs)
