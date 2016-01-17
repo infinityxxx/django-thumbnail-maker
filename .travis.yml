@@ -9,6 +9,9 @@ python:
 env:
   - DJANGO_VERSION=1.5
   - DJANGO_VERSION=1.6
+  - DJANGO_VERSION=1.7
+  - DJANGO_VERSION=1.8
+  - DJANGO_VERSION=1.9
   - DJANGO_VERSION=dev
 
 matrix:
@@ -16,7 +19,10 @@ matrix:
     - env: DJANGO_VERSION=dev
 
 install:
-    - pip install -q coveralls
+    # - pip install -q coveralls
+    # Coveralls 4.0 doesn't support Python 3.2
+    - if [ "$TRAVIS_PYTHON_VERSION" == "3.2" ]; then travis_retry pip install -q coverage==3.7.1; fi
+    - if [ "$TRAVIS_PYTHON_VERSION" != "3.2" ]; then travis_retry pip install -q coverage; fi
     - pip install -q tox
 
 after_success:
