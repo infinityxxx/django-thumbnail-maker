@@ -29,7 +29,7 @@ Configure your project
 -----------------------
 
 Register ``'thumbnail_maker'``, in the ``INSTALLED_APPS`` section of
-your project's settings::
+your project's settings anywhere after ``'sorl.thumbnail'`` app (assume you already installed ``sorl-thumbnail``)::
 
     INSTALLED_APPS = (
         'django.contrib.auth',
@@ -39,7 +39,9 @@ your project's settings::
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.contenttypes',
-
+        ...
+        'sorl.thumbnail',
+        ...
         'thumbnail_maker',
     )
 
