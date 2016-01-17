@@ -16,6 +16,9 @@ env:
 matrix:
   allow_failures:
     - env: DJANGO_VERSION=dev
+  exclude:
+    - python: "3.3"
+      env: DJANGO_VERSION=1.9
 
 install:
     - pip install -q coveralls
