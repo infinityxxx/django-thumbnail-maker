@@ -24,6 +24,13 @@ INSTALLED_APPS = (
     'testapp',
 )
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    },
+]
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
 )

@@ -29,7 +29,7 @@ class ModelTestCase(BaseTestCase):
     def test_auto_generating_thumbs(self):
         self.item = Item()
         self.item.image.save(
-            'data/bamboo.png',
+            'bamboo.png',
             File(open(os.path.join(settings.DATA_ROOT, 'bamboo.png'), 'rb')),
             save=False
         )
@@ -67,18 +67,18 @@ class TemplateTestCase(BaseTestCase):
 
     def test_templatetag(self):
 
-        val = render_to_string('usethumbnail_big.html', {
+        val = render_to_string('testapp/usethumbnail_big.html', {
             'item': self.item,
         }).strip()
         self.assertEqual(val, '<img width="500" height="400">')
 
-        val = render_to_string('usethumbnail_small.html', {
+        val = render_to_string('testapp/usethumbnail_small.html', {
             'item': self.item,
         }).strip()
         self.assertEqual(val, '<img width="80" height="80">')
 
         with self.assertRaises(TemplateSyntaxError):
-            val = render_to_string('usethumbnail_error.html', {
+            val = render_to_string('testapp/usethumbnail_error.html', {
                 'item': self.item,
             }).strip()
 
