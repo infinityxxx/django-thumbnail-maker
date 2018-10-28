@@ -2,6 +2,8 @@ language: python
 
 python:
   - "3.7"
+    dist: xenial
+    sudo: required
   - "3.6"
   - "3.5"
   - "2.7"
@@ -12,8 +14,8 @@ env:
   - DJANGO_VERSION=1.8
 
 install:
-    - pip install -q coveralls
-    - pip install -q tox
+  - pip install -q coveralls
+  - pip install -q tox
 
 after_success:
   - coverage combine
