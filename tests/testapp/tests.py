@@ -67,18 +67,18 @@ class TemplateTestCase(BaseTestCase):
 
     def test_templatetag(self):
 
-        val = render_to_string('usethumbnail_big.html', {
+        val = render_to_string('testapp/usethumbnail_big.html', {
             'item': self.item,
         }).strip()
         self.assertEqual(val, '<img width="500" height="400">')
 
-        val = render_to_string('usethumbnail_small.html', {
+        val = render_to_string('testapp/usethumbnail_small.html', {
             'item': self.item,
         }).strip()
         self.assertEqual(val, '<img width="80" height="80">')
 
         with self.assertRaises(TemplateSyntaxError):
-            val = render_to_string('usethumbnail_error.html', {
+            val = render_to_string('testapp/usethumbnail_error.html', {
                 'item': self.item,
             }).strip()
 
