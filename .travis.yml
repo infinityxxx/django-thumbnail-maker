@@ -9,6 +9,12 @@ python:
 dist: xenial
 sudo: required
 
+cache:
+  apt: true
+  directories:
+    - .tox
+    - $HOME/.cache/pip
+
 env:
   - DJANGO_VERSION=1.11
   - DJANGO_VERSION=1.10
@@ -16,11 +22,12 @@ env:
   - DJANGO_VERSION=1.8
 
 install:
-  - pip install -q coveralls
-  - pip install -q tox
+  - pip install --upgrade pip
+  - pip install -q tox coveralls
 
 after_success:
-  - coverage combine
+  - cd tests
+  - coverage report
   - coveralls
 
 branches:
@@ -28,5 +35,4 @@ branches:
     - master
 
 script:
-    - coverage erase
-    - tox -e py${TRAVIS_PYTHON_VERSION/./}-django${DJANGO_VERSION},docs
+  - tox -e py${TRAVIS_PYTHON_VERSION/./}-django${DJANGO_VERSION},docs
