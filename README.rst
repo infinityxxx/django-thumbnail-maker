@@ -5,7 +5,9 @@
 .. image:: https://badge.fury.io/py/django-thumbnail-maker.svg
     :target: http://badge.fury.io/py/django-thumbnail-maker
 
-Auto-generator of thumbnails for Django, using sorl-thumbnail.
+Auto-generator of thumbnails for Django, using sorl-thumbnail_.
+
+.. _sorl-thumbnail: https://github.com/jazzband/sorl-thumbnail
 
 Features
 ========
