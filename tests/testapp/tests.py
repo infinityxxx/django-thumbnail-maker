@@ -29,7 +29,7 @@ class ModelTestCase(BaseTestCase):
     def test_auto_generating_thumbs(self):
         self.item = Item()
         self.item.image.save(
-            'data/bamboo.png',
+            'bamboo.png',
             File(open(os.path.join(settings.DATA_ROOT, 'bamboo.png'), 'rb')),
             save=False
         )
